@@ -2,56 +2,47 @@ import java.util.*;
 import java.io.*;
 
 public class WordLadder {
-
-    static final ArrayList<String> words = new ArrayList<String>();
-    static Stack<String> answer = new Stack<String>();
-    static final String path = System.getProperty("user.dir") + "\\src\\main\\resources\\";
-    static  String word1;
-    static  String word2;
-
-    private void error(String s){
-        try{
-            throw new Exception(s);
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
+    /**
+     * wordladder
+     * get the ladder(answer) from word1 to word2 through the dictionary which is stored in the arraylist words
+     */
+    private static final ArrayList<String> words = new ArrayList<String>();
+    private static Stack<String> answer = new Stack<String>();
+    private static final String dicPath = System.getProperty("user.dir") + "\\src\\main\\resources\\";
+    private static  String word1;
+    private static  String word2;
 
     public static void main(final String args []) {
-        while(true){
-//            try{
-            getDic();
-            break;
-//            }
-//            catch(Exception e){
-//                System.out.println(e.what());
-//            }
-        }
-        while(true){
-//            try{
-                if(!getWords())
-                    break;
-                wordLadder();
-                printout();
-//            }
-//            catch(Exception e){
-//                System.out.println(e.what())
+        while(true) {
+            try {
+                getDic();
+                break;
+            } catch (Exception e) {
+                System.out.println("No such file!");
             }
         }
 
-    private static void getDic(){
+        while(true){
+                if(!getWords())
+                    break;
+                if(!wordLadder())
+                    continue;
+                printout();
+            }
+        }
+
+    private static void getDic() throws Exception{
         System.out.println("Dictionary file name? ");
         Scanner scanner = new Scanner(System.in);
         String dicName = scanner.nextLine();
         scanner.close();
-        File file = new File(path+dicName);
+        File file = new File(dicPath +dicName);
         BufferedReader reader = new BufferedReader(new FileReader(file));
-        if (reader ==null)
-                error("No such file!");
         String tmpWord;
-        while(tmpWord = reader.readLine()!=null){
+        tmpWord = reader.readLine();
+        while(tmpWord !=null){
             words.add(tmpWord);
+            tmpWord = reader.readLine();
         }
         reader.close();
     }
@@ -59,38 +50,44 @@ public class WordLadder {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Word #1 (or Enter to quit): ");
         word1 = scanner.nextLine();
-        if(!getAWord(word1)){
+        try {
+            if (getAWord(word1)) {
+                scanner.close();
+                return false;
+            }
+            System.out.println("Word #2 (or Enter to quit): ");
+            word2 = scanner.nextLine();
+            if (getAWord(word2)) {
+                scanner.close();
+                return false;
+            }
             scanner.close();
+            checkTwoWords();
+            return true;
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
             return false;
         }
-        System.out.println("Word #2 (or Enter to quit): ");
-        word2 = scanner.nextLine();
-        if(!getAWord(word2)){
-            scanner.close();
-            return false;
-        }
-        scanner.close();
-        checkTwoWords();
-        return true;
     }
-    private static boolean getAWord(String word){
+    private static boolean getAWord(String word)throws Exception{
         if(word == null){
             System.out.println("Have a nice day!");
-            return false;
+            return true;
         }
         checkWord(word1);
-        return true;
+        return false;
     }
 
-    private static void checkWord(String word){
+    private static void checkWord(String word)throws Exception{
         char [] cWord = word.toCharArray();
         for(char ch : cWord){
             if( !((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')))
-                error("Not a word!");
+                throw new Exception("Not a word!");
         }
-        word.toLowerCase();
+        word = word.toLowerCase();
         if(!checkHaveWord(word))
-            error("The two words must be found in the dictionary.");
+            throw new Exception("The two words must be found in the dictionary.");
     }
     private static boolean checkHaveWord(String word){
         int low = 0;
@@ -107,20 +104,20 @@ public class WordLadder {
         }
         return false;
     }
-    private static void checkTwoWords(){
+    private static void checkTwoWords()throws Exception{
     lengthCheck();
     sameCheck();
 }
-    private static void lengthCheck(){
+    private static void lengthCheck()throws Exception{
         if(word1.length() != word2.length())
-            error("The two words must be the same length.");
+            throw new Exception("The two words must be the same length.");
     }
-    private static void sameCheck(){
+    private static void sameCheck()throws Exception{
         if(word1.equals(word2))
-            error("The two words must be different.");
+            throw new Exception("The two words must be different.");
     }
 
-    private static void wordLadder(){
+    private static boolean wordLadder(){
         Stack<String> s = new Stack<String>();
         s.push(word1);
 
@@ -129,33 +126,35 @@ public class WordLadder {
 
         Set<String> wordsBeenUsed = new HashSet<String>();
         wordsBeenUsed.add(word1);
-
-        while(!line.isEmpty()){
-            String upWord = line.peek().peek();
-            for(int i = 0;i < upWord.length(); i++){
-                for(char j ='a';j <= 'z';j++){
-                    String tmpWord = upWord.substring(0,i) + j + upWord.substring(i + 1);
-                    if(checkHaveWord(tmpWord)){
-                        if(!wordsBeenUsed.contains(tmpWord)){
-                            if(tmpWord.equals(word2)){
-                                line.peek().push(tmpWord);
-                                answer = line.peek();
+        try {
+            while (!line.isEmpty()) {
+                String upWord = line.peek().peek();
+                for (int i = 0; i < upWord.length(); i++) {
+                    for (char j = 'a'; j <= 'z'; j++) {
+                        String tmpWord = upWord.substring(0, i) + j + upWord.substring(i + 1);
+                        if (checkHaveWord(tmpWord)) {
+                            if (!wordsBeenUsed.contains(tmpWord)) {
+                                if (tmpWord.equals(word2)) {
+                                    line.peek().push(tmpWord);
+                                    answer = line.peek();
+                                    return true;
+                                }
+                                wordsBeenUsed.add(tmpWord);
+                                Stack<String> tmp = line.peek();
+                                tmp.push(tmpWord);
+                                line.add(tmp);
                             }
-                            wordsBeenUsed.add(tmpWord);
-                            Stack<String> tmp = line.peek();
-                            tmp.push(tmpWord);
-                            line.add(tmp);
                         }
-                        else
-                            continue;
                     }
-                    else
-                        continue;
                 }
+                line.poll();
             }
-            line.poll();
+            throw new Exception("No word ladder found from " + word1 + " back to " + word2 + ".");
         }
-        error("No word ladder found from "+word1+" back to "+word2+".");
+        catch(Exception e){
+            System.err.println(e.getMessage());
+            return false;
+        }
     }
 
     private static void printout(){

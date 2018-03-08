@@ -38,21 +38,13 @@
       <file leaf-file-name="WordLadder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/WordLadder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="203">
+              <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding>
-                <element signature="method#error#0;class#WordLadder#0" expanded="false" />
-                <element signature="e#653#668#0" expanded="false" />
-                <element signature="e#934#949#0" expanded="false" />
-                <element signature="method#getDic#0;class#WordLadder#0" expanded="false" />
-                <element signature="method#getWords#0;class#WordLadder#0" expanded="false" />
-                <element signature="method#getAWord#0;class#WordLadder#0" expanded="false" />
-                <element signature="method#checkWord#0;class#WordLadder#0" expanded="false" />
                 <element signature="method#checkHaveWord#0;class#WordLadder#0" expanded="false" />
                 <element signature="method#checkTwoWords#0;class#WordLadder#0" expanded="false" />
                 <element signature="method#lengthCheck#0;class#WordLadder#0" expanded="false" />
                 <element signature="method#sameCheck#0;class#WordLadder#0" expanded="false" />
-                <element signature="method#wordLadder#0;class#WordLadder#0" expanded="false" />
                 <element signature="method#printout#0;class#WordLadder#0" expanded="false" />
               </folding>
             </state>
@@ -101,8 +93,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="200" />
-    <option name="y" value="95" />
+    <option name="x" value="234" />
+    <option name="y" value="90" />
     <option name="width" value="1426" />
     <option name="height" value="987" />
   </component>
@@ -310,15 +302,15 @@
       <option name="presentableId" value="Default" />
       <updated>1520413484963</updated>
       <workItem from="1520413493673" duration="735000" />
-      <workItem from="1520423657249" duration="18496000" />
+      <workItem from="1520423657249" duration="23230000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19231000" />
+    <option name="totallyTimeSpent" value="23965000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="200" y="95" width="1426" height="987" extended-state="0" />
+    <frame x="234" y="90" width="1426" height="987" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -382,21 +374,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/WordLadder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        <state relative-caret-position="203">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding>
-            <element signature="method#error#0;class#WordLadder#0" expanded="false" />
-            <element signature="e#653#668#0" expanded="false" />
-            <element signature="e#934#949#0" expanded="false" />
-            <element signature="method#getDic#0;class#WordLadder#0" expanded="false" />
-            <element signature="method#getWords#0;class#WordLadder#0" expanded="false" />
-            <element signature="method#getAWord#0;class#WordLadder#0" expanded="false" />
-            <element signature="method#checkWord#0;class#WordLadder#0" expanded="false" />
             <element signature="method#checkHaveWord#0;class#WordLadder#0" expanded="false" />
             <element signature="method#checkTwoWords#0;class#WordLadder#0" expanded="false" />
             <element signature="method#lengthCheck#0;class#WordLadder#0" expanded="false" />
             <element signature="method#sameCheck#0;class#WordLadder#0" expanded="false" />
-            <element signature="method#wordLadder#0;class#WordLadder#0" expanded="false" />
             <element signature="method#printout#0;class#WordLadder#0" expanded="false" />
           </folding>
         </state>
