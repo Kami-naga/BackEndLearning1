@@ -4,74 +4,85 @@ import java.io.*;
 public class WordLadder {
     /**
      * wordladder
-     * get the ladder(answer) from word1 to word2 through the dictionary which is stored in the arraylist words
+     * get the ladder("answer") back from "word2" to "word1" through the dictionary which is stored in the arraylist "words"
      */
     private static final ArrayList<String> words = new ArrayList<String>();
     private static Stack<String> answer = new Stack<String>();
     private static final String dicPath = System.getProperty("user.dir") + "\\src\\main\\resources\\";
+    private static final String defaultDicName = "dictionary.txt";
     private static  String word1;
     private static  String word2;
-
+    private enum KEY{QUIT,ERR,OK}
     public static void main(final String args []) {
-        while(true) {
-            try {
-                getDic();
-                break;
-            } catch (Exception e) {
-                System.out.println("No such file!");
-            }
+        if(!getDic()){
+            System.out.println("Have a nice day!");
+            System.exit(0);
         }
-
         while(true){
-                if(!getWords())
+            KEY key = getWords();
+                if(key==KEY.QUIT)
                     break;
-                if(!wordLadder())
+                else if(key==KEY.ERR)
                     continue;
-                printout();
+                if(wordLadder())
+                    printout();
             }
         }
 
-    private static void getDic() throws Exception{
-        System.out.println("Dictionary file name? ");
-        Scanner scanner = new Scanner(System.in);
-        String dicName = scanner.nextLine();
-        scanner.close();
-        File file = new File(dicPath +dicName);
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String tmpWord;
-        tmpWord = reader.readLine();
-        while(tmpWord !=null){
-            words.add(tmpWord);
-            tmpWord = reader.readLine();
+    private static boolean getDic(){
+        while(true){
+            try {
+                System.out.println("Dictionary file name?(input 'q' to quit and the default dictionary name is " +
+                                   "dictionary.txt To use the default name, just press the Enter key) ");
+                Scanner scanner = new Scanner(System.in);
+                String dicName = scanner.nextLine();
+                if("".equals(dicName))
+                    dicName = defaultDicName;
+                else if("q".equals(dicName)){
+                    scanner.close();
+                    return false;
+                }
+                File file = new File(dicPath + dicName);
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                String tmpWord;
+                tmpWord = reader.readLine();
+                while (tmpWord != null) {
+                    words.add(tmpWord);
+                    tmpWord = reader.readLine();
+                }
+                reader.close();
+                return true;
+            }
+            catch(Exception e){
+                System.err.println("No such file!");
+            }
         }
-        reader.close();
     }
-    private static boolean getWords(){
+    private static KEY getWords(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Word #1 (or Enter to quit): ");
         word1 = scanner.nextLine();
         try {
             if (getAWord(word1)) {
                 scanner.close();
-                return false;
+                return KEY.QUIT;
             }
             System.out.println("Word #2 (or Enter to quit): ");
             word2 = scanner.nextLine();
             if (getAWord(word2)) {
                 scanner.close();
-                return false;
+                return KEY.QUIT;
             }
-            scanner.close();
             checkTwoWords();
-            return true;
+            return KEY.OK;
         }
         catch(Exception e){
             System.err.println(e.getMessage());
-            return false;
+            return KEY.ERR;
         }
     }
     private static boolean getAWord(String word)throws Exception{
-        if(word == null){
+        if("".equals(word)){
             System.out.println("Have a nice day!");
             return true;
         }
@@ -92,7 +103,7 @@ public class WordLadder {
     private static boolean checkHaveWord(String word){
         int low = 0;
         int high = words.size() - 1;
-        while (low<high){
+        while (low <= high){
             int mid = (low + high) / 2;
             String w = words.get(mid);
             if(w.equals(word))
@@ -140,7 +151,7 @@ public class WordLadder {
                                     return true;
                                 }
                                 wordsBeenUsed.add(tmpWord);
-                                Stack<String> tmp = line.peek();
+                                Stack<String> tmp = (Stack<String>) line.peek().clone();
                                 tmp.push(tmpWord);
                                 line.add(tmp);
                             }
