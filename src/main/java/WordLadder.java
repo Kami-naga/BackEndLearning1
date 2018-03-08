@@ -145,12 +145,13 @@ public class WordLadder {
                         String tmpWord = upWord.substring(0, i) + j + upWord.substring(i + 1);
                         if (checkHaveWord(tmpWord)) {
                             if (!wordsBeenUsed.contains(tmpWord)) {
-                                if (tmpWord.equals(word2)) {
+                                if (tmpWord.equals(word2)) { //get the ladder
                                     line.peek().push(tmpWord);
                                     answer = line.peek();
                                     return true;
                                 }
                                 wordsBeenUsed.add(tmpWord);
+                                //copy the stack
                                 Stack<String> tmp = (Stack<String>) line.peek().clone();
                                 tmp.push(tmpWord);
                                 line.add(tmp);
