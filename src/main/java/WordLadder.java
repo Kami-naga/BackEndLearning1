@@ -6,30 +6,30 @@ public class WordLadder {
      * wordladder
      * get the ladder("answer") back from "word2" to "word1" through the dictionary which is stored in the arraylist "words"
      */
-    private static final ArrayList<String> words = new ArrayList<String>();
-    private static Stack<String> answer = new Stack<String>();
-    private static final String dicPath = System.getProperty("user.dir") + "\\src\\main\\resources\\";
-    private static final String defaultDicName = "dictionary.txt";
-    private static  String word1;
-    private static  String word2;
-    private enum KEY{QUIT,ERR,OK}
-    public static void main(final String args []) {
+    static final ArrayList<String> words = new ArrayList<String>();
+    static Stack<String> answer = new Stack<String>();
+    static final String dicPath = System.getProperty("user.dir") + "\\src\\main\\resources\\";
+    static final String defaultDicName = "dictionary.txt";
+    static  String word1;
+    static  String word2;
+    enum KEY{QUIT,ERR,OK}
+
+    public static void start(){
         if(!getDic()){
             System.out.println("Have a nice day!");
             System.exit(0);
         }
         while(true){
             KEY key = getWords();
-                if(key==KEY.QUIT)
-                    break;
-                else if(key==KEY.ERR)
-                    continue;
-                if(wordLadder())
-                    printout();
-            }
+            if(key==KEY.QUIT)
+                break;
+            else if(key==KEY.ERR)
+                continue;
+            if(wordLadder())
+                printout();
         }
-
-    private static boolean getDic(){
+    }
+    static boolean getDic(){
         while(true){
             try {
                 System.out.println("Dictionary file name?(input 'q' to quit and the default dictionary name is " +
@@ -81,16 +81,16 @@ public class WordLadder {
             return KEY.ERR;
         }
     }
-    private static boolean getAWord(String word)throws Exception{
+    static boolean getAWord(String word)throws Exception{
         if("".equals(word)){
             System.out.println("Have a nice day!");
             return true;
         }
-        checkWord(word1);
+        checkWord(word);
         return false;
     }
 
-    private static void checkWord(String word)throws Exception{
+    static void checkWord(String word)throws Exception{
         char [] cWord = word.toCharArray();
         for(char ch : cWord){
             if( !((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')))
@@ -119,16 +119,16 @@ public class WordLadder {
     lengthCheck();
     sameCheck();
 }
-    private static void lengthCheck()throws Exception{
+    static void lengthCheck()throws Exception{
         if(word1.length() != word2.length())
             throw new Exception("The two words must be the same length.");
     }
-    private static void sameCheck()throws Exception{
+    static void sameCheck()throws Exception{
         if(word1.equals(word2))
             throw new Exception("The two words must be different.");
     }
 
-    private static boolean wordLadder(){
+    static boolean wordLadder(){
         Stack<String> s = new Stack<String>();
         s.push(word1);
 

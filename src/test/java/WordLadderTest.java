@@ -1,157 +1,100 @@
 
-import org.junit.Test; 
-import org.junit.Before; 
-import org.junit.After; 
+import org.junit.*;
+import org.junit.rules.ExpectedException;
 
-/** 
+import java.io.*;
+//import java.util.Stack;
+
+/**
 * WordLadder Tester. 
 * 
 * @author hyq
 * @since <pre>March 8, 2018</pre>
 * @version 1.0 
 */ 
-public class WordLadderTest { 
-
-@Before
-public void before() throws Exception { 
-} 
-
-@After
-public void after() throws Exception { 
-} 
-
-/** 
-* 
-* Method: main(final String args []) 
-* 
-*/ 
-@Test
-public void testMain() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-
+public class WordLadderTest {
 /** 
 * 
 * Method: getDic() 
 * 
-*/ 
+*/
+
 @Test
-public void testGetDic() throws Exception { 
-//TODO: Test goes here...
+public void getDicQuit() {
+//   Method method = wordLadder.getClass().getMethod("getDic");
+//   method.setAccessible(true);
+    String fileName = "q";
+    InputStream stdin = System.in;
+    try {
+        System.setIn(new ByteArrayInputStream(fileName.getBytes()));
+//        method.invoke(wordLadder);
+        Assert.assertFalse(WordLadder.getDic());
+    } finally {
+        System.setIn(stdin);
+    }
+}
 
-
-/* 
-try { 
-   Method method = WordLadder.getClass().getMethod("getDic"); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
-
-/** 
-* 
-* Method: getWords() 
-* 
-*/ 
 @Test
-public void testGetWords() throws Exception { 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = WordLadder.getClass().getMethod("getWords"); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
+public void getDicNormal(){
+    String fileName = "dictionary.txt";
+    InputStream stdin = System.in;
+    try {
+        System.setIn(new ByteArrayInputStream(fileName.getBytes()));
+        Assert.assertTrue(WordLadder.getDic());
+    } finally {
+        System.setIn(stdin);
+    }
+}
 
-/** 
-* 
-* Method: getAWord(String word) 
-* 
-*/ 
+/**
+*
+* Method: getAWord(String word)
+*
+*/
 @Test
-public void testGetAWord() throws Exception { 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = WordLadder.getClass().getMethod("getAWord", String.class); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
-
+public void testGetAWordQuit() throws Exception {
+    Assert.assertTrue(WordLadder.getAWord(""));
+}
+@Test
+public void testGetAWordNormal() throws Exception {
+    String fileName = "dictionary.txt";
+    InputStream stdin = System.in;
+    System.setIn(new ByteArrayInputStream(fileName.getBytes()));
+    Assert.assertTrue(WordLadder.getDic());
+    System.setIn(stdin);
+    Assert.assertFalse(WordLadder.getAWord("azure"));
+}
 /** 
 * 
 * Method: checkWord(String word) 
 * 
-*/ 
+*/
+@Rule
+public ExpectedException expectedEx = ExpectedException.none();
 @Test
-public void testCheckWord() throws Exception { 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = WordLadder.getClass().getMethod("checkWord", String.class); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
+public void testNotAWord() throws Exception {
+    expectedEx.expect(Exception.class);
+    expectedEx.expectMessage("Not a word!");
+    WordLadder.checkWord("q2w");
 } 
 
 /** 
 * 
 * Method: checkHaveWord(String word) 
 * 
-*/ 
-@Test
-public void testCheckHaveWord() throws Exception { 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = WordLadder.getClass().getMethod("checkHaveWord", String.class); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
+*/
 
-/** 
-* 
-* Method: checkTwoWords() 
-* 
-*/ 
 @Test
-public void testCheckTwoWords() throws Exception { 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = WordLadder.getClass().getMethod("checkTwoWords"); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
+public void testCheckHaveWord() throws Exception {
+    String fileName = "dictionary.txt";
+    InputStream stdin = System.in;
+    System.setIn(new ByteArrayInputStream(fileName.getBytes()));
+    Assert.assertTrue(WordLadder.getDic());
+    System.setIn(stdin);
+    expectedEx.expect(Exception.class);
+    expectedEx.expectMessage("The two words must be found in the dictionary.");
+    WordLadder.checkWord("q");
+}
 
 /** 
 * 
@@ -160,17 +103,11 @@ try {
 */ 
 @Test
 public void testLengthCheck() throws Exception { 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = WordLadder.getClass().getMethod("lengthCheck"); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
+    WordLadder.word1="fragile";
+    WordLadder.word2="break";
+    expectedEx.expect(Exception.class);
+    expectedEx.expectMessage("The two words must be the same length.");
+    WordLadder.lengthCheck();
 } 
 
 /** 
@@ -179,18 +116,12 @@ try {
 * 
 */ 
 @Test
-public void testSameCheck() throws Exception { 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = WordLadder.getClass().getMethod("sameCheck"); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
+public void testSameCheck() throws Exception {
+    WordLadder.word1="paradox";
+    WordLadder.word2="paradox";
+    expectedEx.expect(Exception.class);
+    expectedEx.expectMessage("The two words must be different.");
+    WordLadder.sameCheck();
 } 
 
 /** 
@@ -199,38 +130,39 @@ try {
 * 
 */ 
 @Test
-public void testWordLadder() throws Exception { 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = WordLadder.getClass().getMethod("wordLadder"); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
+public void noLadder() {
+    String fileName = "dictionary.txt";
+    InputStream stdin = System.in;
+    System.setIn(new ByteArrayInputStream(fileName.getBytes()));
+    Assert.assertTrue(WordLadder.getDic());
+    System.setIn(stdin);
+    WordLadder.word1="sepia";
+    WordLadder.word2="azure";
+    Assert.assertFalse(WordLadder.wordLadder());
+}
 
-/** 
-* 
-* Method: printout() 
-* 
-*/ 
 @Test
-public void testPrintout() throws Exception { 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = WordLadder.getClass().getMethod("printout"); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
-
+public void haveLadder() {
+    String fileName = "dictionary.txt";
+    InputStream stdin = System.in;
+    System.setIn(new ByteArrayInputStream(fileName.getBytes()));
+    Assert.assertTrue(WordLadder.getDic());
+    System.setIn(stdin);
+    WordLadder.word1="angel";
+    WordLadder.word2="demon";
+//    Stack<String> correctAnswer = new Stack<String>();
+//    correctAnswer.push("angel");
+//    correctAnswer.push("anger");
+//    correctAnswer.push("auger");
+//    correctAnswer.push("luger");
+//    correctAnswer.push("leger");
+//    correctAnswer.push("leges");
+//    correctAnswer.push("lemes");
+//    correctAnswer.push("demes");
+//    correctAnswer.push("demos");
+//    correctAnswer.push("demon");
+    //
+    Assert.assertTrue(WordLadder.wordLadder());
+//    Assert.assertSame(WordLadder.answer,correctAnswer);
+    }
 } 
